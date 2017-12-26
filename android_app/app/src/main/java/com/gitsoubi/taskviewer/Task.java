@@ -4,17 +4,12 @@ import java.util.Date;
 
 public class Task {
 	// FIXME: types instead of ints
-	public Task(String id, String name, Date timestamp, String description, int priority, int color) {
-		mId = id;
+	public Task(String name, Date timestamp, String description, int priority, int color) {
 		mName = name;
 		mTimestamp = timestamp;
 		mDescription = description;
 		mPriority = priority;
 		mColor = color;
-	}
-
-	public String getId() {
-		return mId;
 	}
 
 	public String getName() {
@@ -36,8 +31,7 @@ public class Task {
 	public int getColor() {
 		return mColor;
 	}
-
-	private String mId;
+	
 	private String mName;
 	private Date mTimestamp;
 	private String mDescription;
