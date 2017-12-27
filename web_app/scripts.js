@@ -26,13 +26,56 @@ var dateOfBirth = 1000;
 
 //a parameter in the task will reference the user in question
 //if it matches user, then it will read from that entry
-
+class taskParameters{
+	constructor(color, desc, name, prio, month, day, year, clock, user){
+		this.color = color;
+		this.desc = desc;
+		this.name = name;
+		this.prio = prio;
+		this.month = month;
+		this.day = day;
+		this.year = year;
+		this.clock = clock;
+		this.user = user;
+	}
+	changeColor(color){
+		this.color = color;
+	}
+	changeDesc(desc){
+		this.desc = desc;
+	}
+	changeName(name){
+		this.name = name;
+	}
+	changePrio(prio){
+		this.prio = prio;
+	}
+	changeMonth(month){
+		this.month = month;
+	}
+	changeDay(day){
+		this.day = day;
+	}
+	changeYear(year){
+		this.year = year;
+	}
+	changeClock(clock){
+		this.clock = clock;
+	}
+	changeUser(user){
+		this.user = user;
+	}
+	
+}
 //adds an item to the task
-function addItemToTasks(){
+function addItemToTasks(taskParameters){
 	db.collection("tasks").add({
-		first: firstName,
-		last: lastName,
-		born: dateOfBirth
+		color: firstName,
+		description: lastName,
+		name: dateOfBirth,
+		priority: prio,
+		time: [month: month, day: day, year: year, clock: clock],
+		user: userReference
 	})
 	.then(function(docRef){
 		console.log("Document written with ID: ", docRef.id); 
