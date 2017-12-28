@@ -1,0 +1,26 @@
+{
+	"extends": "eslint:recommended",
+	"env": {
+		"browser": true,
+		"es6": true,
+		"jquery": true
+	},
+
+	"globals": {
+		"firebase": false,
+		"firebaseui": false
+	},
+
+	"rules": {
+		"max-len": ["error", { "code": 120, "tabWidth": 4}],
+        "max-nested-callbacks": ["error", 3],
+        "no-trailing-spaces": "error",
+        "quotes": ["error", "double"],
+        "semi": ["error", "always"],
+        "strict": ["error", "global"],
+
+        "no-console": "off",
+        "no-unused-vars": "off",
+        "no-undef": "off"
+	}
+}
