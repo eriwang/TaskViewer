@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+	<script>
+	// Initialize Firebase
+	var config = {
+	apiKey: "AIzaSyBM1_eUTaTNg23tgHQDWK7Sro3gAh8r0a4",
+	authDomain: "taskviewer-2e5c7.firebaseapp.com",
+	databaseURL: "https://taskviewer-2e5c7.firebaseio.com/",
+	projectId: "taskviewer-2e5c7",
+	storageBucket: "taskviewer-2e5c7.appspot.com",
+	messagingSenderId: "1015637164034"
+	};
+	firebase.initializeApp(config);
+	</script>
+	<script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
+	<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" />
 	<link rel="stylesheet" type="text/css" href="styles.css">
-	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript" src="js/auth.js"></script>
 	<title>Test</title>
 </head>
 <body>
 Hello world!
+
+<div id="firebaseui-auth-container"></div>
+
 </body>
 </html>
