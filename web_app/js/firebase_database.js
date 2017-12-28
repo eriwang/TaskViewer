@@ -32,10 +32,9 @@ $(document).ready(function(){
 		addItemToTasks(task);
 	});
 });
-
 //class for the tasks
 class taskParameters{
-	constructor(color, desc, name, prio, timestamp, user){
+		constructor(color, desc, name, prio, timestamp, user){
 		this.color = color;
 		this.desc = desc;
 		this.name = name;
@@ -43,123 +42,105 @@ class taskParameters{
 		this.time = timestamp;
 		this.user = user;
 	}
-	changeColor(color){
-		this.color = color;
+}
+var firebaseDatabase = (function(){
+	//adds an item to the task
+	function addItemToTasks(taskParameters){
+		db.collection("tasks").add({
+			color: taskParameters.color,
+			description: taskParameters.desc,
+			name: taskParameters.name,
+			priority: taskParameters.prio,
+			time: taskParameters.time,
+			user: taskParameters.user
+		})
+		.then(function(docRef){
+			console.log("Document written with ID: ", docRef.id);
+		})
+		.catch(exception("Error adding document"));
 	}
-	changeDesc(desc){
-		this.desc = desc;
+
+	//adds a user
+	function addUser(user){
+		db.collection("users").add({
+			username: user
+		})
+		.then(function(docRef){
+			console.log("Document written with ID: ", docRef.id);
+		})
+		.catch(exception("Error adding document"));
 	}
-	changeName(name){
-		this.name = name;
+
+	//each item will be read from the database collection "tasks" for a specific "user"
+	function readTasks(){
+		db.collection("tasks").get().then(logAllQuerySnapshots);
 	}
-	changePrio(prio){
-		this.prio = prio;
+
+	//return each task related to a user
+	function readTaskfromUser(user){
+		var taskRef = db.collections("users");
+		var query = taskRef.where("user", "==", user);
 	}
-	changeTimestsamp(timestamp){
-		this.time = timestamp;
+
+	//reads individual docs from the database
+	function readDoc(collection, docName){
+		var docRef = db.collection(collection).doc(docName);
+		docRef.get().then(function(doc){
+			if(doc.exists){
+				console.log("Document Data: ", doc.data());
+			}
+			else{
+				console.log("No doc found");
+			}
+		}).catch(exception("Error getting doc: "));
 	}
-	changeUser(user){
-		this.user = user;
+
+	//updates a task from the database
+	function updateTask(collection, docName, taskParameters){
+		var taskRef = db.collection(collection).doc(docName);
+		return taskRef.update({
+			color: taskParameters.color,
+			description: taskParameters.desc,
+			name: taskParameters.name,
+			priority: taskParameters.prio,
+			time: taskParameters.time,
+			user: taskParameters.user
+		})
+		.then(confirmation("Doc successfully updated."))
+		.catch(exception("Error updating doc"));
 	}
-}
-//adds an item to the task
-function addItemToTasks(taskParameters){
-	db.collection("tasks").add({
-		color: taskParameters.color,
-		description: taskParameters.desc,
-		name: taskParameters.name,
-		priority: taskParameters.prio,
-		time: taskParameters.time,
-		user: taskParameters.user
-	})
-	.then(function(docRef){
-		console.log("Document written with ID: ", docRef.id);
-	})
-	.catch(function(error){
-		console.error("Error adding document: ", error);
-	});
-}
 
-//adds a user
-function addUser(user){
-	db.collection("users").add({
-		username: user
-	})
-	.then(function(docRef){
-		console.log("Document written with ID: ", docRef.id);
-	})
-	.catch(function(error){
-		console.error("Error adding document: ", error);
-	});
-}
-//read each user
-function readUserFromDatabase(){
-	db.collection("users").get().then((querySnapshot) => {
-			querySnapshot.forEach((doc) => {
-				//code to manipulate files
-				console.log("${doc.id} => ${doc.data()}");
-			});
-	});
-}
+	//delete task
+	function deleteTask(collection, docName){
+		db.collection(collection).doc(docName).delete()
+		.then(confirmation("Deleted task"))
+		.catch(exception("Error removing document"));
+	}
 
-//each item will be read from the database collection "tasks" for a specific "user"
-function readTasksFromDatabase(){
-	var taskRef = db.collection("tasks");
-	db.collection("tasks").get().then((querySnapshot) => {
-			querySnapshot.forEach((doc) => {
-				//code to manipulate files
+	//helper function to log queries
+	function logAllQuerySnapshots(querySnapshot){
+		querySnapshot.forEach((doc) => {
+			console.log("${doc.id} => ${doc.data()}");
+		});
+	}
 
-				console.log("${doc.id} => ${doc.data()}");
-			});
-	});
-}
+	//error helper
+	function exception(error){
+		console.error(error);
+	}
 
-//return each task related to a user
-function readTaskfromUser(user){
-	var taskRef = db.collections("users");
-	var query = taskRef.where("user", "==", user);
-}
+	//confirmation (Can be scaled to do more) or add other helper functions
+	function confirmation(message){
+		console.log(message);
+	}
 
-//reads individual docs from the database
-function readDocFromDatabase(collection, docName){
-	var docRef = db.collection(collection).doc(docName);
-	docRef.get().then(function(doc){
-		if(doc.exists){
-			console.log("Document Data: ", doc.data());
-		}
-		else{
-			console.log("No doc found");
-		}
-	}).catch(function(error){
-		console.log("Error getting doc: ", error);
-	});
-}
-
-//updates a task from the database
-function updateTaskFromDatabase(collection, docName, taskParameters){
-	var taskRef = db.collection(collection).doc(docName);
-	return taskRef.update({
-		color: taskParameters.color,
-		description: taskParameters.desc,
-		name: taskParameters.name,
-		priority: taskParameters.prio,
-		time: taskParameters.time,
-		user: taskParameters.user
-	})
-	.then(function(){
-		console.log("Doc successfully updated.");
-	})
-	.catch(function(error){
-		console.error("Error updating doc: ", error);
-	});
-}
-
-//delete task
-function deleteTaskFromDatabase(collection, docName){
-	db.collection(collection).doc(docName).delete().then(function(){
-		console.log("Deleted task");
-	}).catch(function(error){
-		console.error("Error removing document: ", error);
-	});
-}
-
+	return{
+		addItemToTasks: addItemToTasks,
+		addUser: addUser,
+		readTasks: readTasks,
+		readTaskfromUser: readTaskfromUser,
+		readDoc: readDoc,
+		updateTask: updateTask,
+		deleteTask: deleteTask
+	};
+});
