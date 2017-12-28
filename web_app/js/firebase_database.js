@@ -34,13 +34,13 @@ $(document).ready(function(){
 });
 //class for the tasks
 class taskParameters{
-		constructor(color, desc, name, prio, timestamp, user){
-		this.color = color;
-		this.desc = desc;
-		this.name = name;
-		this.prio = prio;
-		this.time = timestamp;
-		this.user = user;
+	constructor(color, desc, name, prio, timestamp, user){
+	this.color = color;
+	this.desc = desc;
+	this.name = name;
+	this.prio = prio;
+	this.time = timestamp;
+	this.user = user;
 	}
 }
 var firebaseDatabase = (function(){
