@@ -35,12 +35,12 @@ $(document).ready(function(){
 //class for the tasks
 class taskParameters{
 	constructor(color, desc, name, prio, timestamp, user){
-	this.color = color;
-	this.desc = desc;
-	this.name = name;
-	this.prio = prio;
-	this.time = timestamp;
-	this.user = user;
+		this.color = color;
+		this.desc = desc;
+		this.name = name;
+		this.prio = prio;
+		this.time = timestamp;
+		this.user = user;
 	}
 }
 var firebaseDatabase = (function(){
@@ -92,7 +92,8 @@ var firebaseDatabase = (function(){
 			else{
 				console.log("No doc found");
 			}
-		}).catch(exception("Error getting doc: "));
+		})
+		.catch(exception("Error getting doc"));
 	}
 
 	//updates a task from the database
