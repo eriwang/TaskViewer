@@ -16,3 +16,5 @@ $(document).ready(function() {
 	initializeFirebase();
 	firebaseAuth.start();
 });
+
+ReactDOM.render(<App />, document.getElementById("app"));
