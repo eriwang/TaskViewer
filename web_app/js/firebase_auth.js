@@ -1,8 +1,11 @@
 "use strict";
 
+var firebase = require("firebase");
+var firebaseui = require("firebaseui");
+
 // TODO: we need logout functionality
 var firebaseAuth = (function() {
-    // TODO: var callback = uiController.function; 
+    // TODO: var callback = uiController.function;
 
     function onAuthStateChanged(user) {
         const userIsSignedIn = (user != null);
@@ -55,3 +58,5 @@ var firebaseAuth = (function() {
         start: start
     };
 })();
+
+module.exports = firebaseAuth;
