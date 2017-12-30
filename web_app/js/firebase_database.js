@@ -81,7 +81,7 @@ var firebaseDatabase = (function() {
     // updates a task from the database
     function updateTask(collection, docName, taskParameters) {
         var taskRef = db.collection(collection).doc(docName);
-        return taskRef.update({ // FIXME: is this correct??
+        taskRef.update({
             color: taskParameters.color,
             description: taskParameters.desc,
             name: taskParameters.name,
@@ -127,3 +127,5 @@ var firebaseDatabase = (function() {
         deleteTask: deleteTask
     };
 });
+
+module.exports = firebaseDatabase;

@@ -4,6 +4,7 @@ var $ = require("jquery");
 var firebase = require("firebase");
 
 var firebaseAuth = require("./firebase_auth.js");
+var firebaseDatabase = require("./firebase_database.js");
 
 function initializeFirebase() {
     var firebaseConfig = {
@@ -21,3 +22,9 @@ $(document).ready(function() {
 	initializeFirebase();
 	firebaseAuth.start();
 });
+
+class MyComponent extends React.Component {
+    render() {
+        return <div>Hello World</div>;
+    }
+}
