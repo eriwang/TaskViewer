@@ -1,5 +1,11 @@
 "use strict";
 
+var $ = require("jquery");
+var firebase = require("firebase");
+
+var firebaseAuth = require("./firebase_auth.js");
+var firebaseDatabase = require("./firebase_database.js");
+
 function initializeFirebase() {
     var firebaseConfig = {
         apiKey: "AIzaSyBM1_eUTaTNg23tgHQDWK7Sro3gAh8r0a4",
