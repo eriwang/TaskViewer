@@ -1,4 +1,4 @@
-"use strict";
+import React from "react";
 
 // TODO: move to use as shared class for db, may need an adaptor for prototype
 function Task(name, description, color, priority, time) {
@@ -55,3 +55,5 @@ class TaskComponent extends React.Component {
         );
     }
 }
+
+export default TaskViewComponent;
