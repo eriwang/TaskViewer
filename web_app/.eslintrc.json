@@ -1,28 +1,28 @@
 {
-	"extends": ["eslint:recommended", "plugin:react/recommended"],
-	"env": {
-		"browser": true,
-		"es6": true,
-		"jquery": true
-	},
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "jquery": true
+    },
 
-	"globals": {
-		"firebase": false,
-		"firebaseui": false
-	},
+    "globals": {
+        "require": true
+    },
 
-	"rules": {
-		"max-len": ["error", { "code": 120, "tabWidth": 4}],
+    "rules": {
+        "eol-last": ["error", "always"],
+        "max-len": ["error", { "code": 120, "tabWidth": 4}],
         "max-nested-callbacks": ["error", 3],
         "no-trailing-spaces": "error",
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
+        "space-before-blocks": ["error", "always"],
+        "spaced-comment": ["error", "always"],
         "strict": ["error", "global"],
 
         "no-console": "off",
         "no-unused-vars": "off",
-        "no-undef": "off",
-        "react/jsx-no-undef": "off",
-        "react/react-in-jsx-scope": "off"
-	}
+    }
 }
