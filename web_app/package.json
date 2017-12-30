@@ -1,29 +1,30 @@
 {
-    "name": "web_app",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "start-server": "cd dist && npx serve-https -p 8000 -d . && cd -",
-        "build": "npx webpack"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "devDependencies": {
-        "babel-core": "^6.26.0",
-        "babel-loader": "^7.1.2",
-        "babel-preset-env": "^1.6.1",
-        "babel-preset-react": "^6.24.1",
-        "firebase": "^4.8.1",
-        "firebase-app": "0.0.1",
-        "firebaseui": "^2.5.1",
-        "jquery": "^3.2.1",
-        "react": "^16.2.0",
-        "react-dom": "^16.2.0",
-        "webpack": "^3.10.0"
-    },
-    "dependencies": {
-        "serve-https": "^2.2.1"
-    }
+  "name": "web_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start-server": "cd dist && npx serve-https -p 8000 -d . && cd -",
+    "build": "npx webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "firebase": "^4.8.1",
+    "firebase-app": "0.0.1",
+    "firebaseui": "^2.5.1",
+    "jquery": "^3.2.1",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "webpack": "^3.10.0"
+  },
+  "dependencies": {
+    "serve-https": "^2.2.1"
+  }
 }
