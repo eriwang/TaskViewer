@@ -89,14 +89,14 @@ var firebaseDatabase = (function() {
             time: taskParameters.time,
             user: taskParameters.user
         })
-        .then(confirmation("Doc successfully updated."))
+        .then(function(){confirmation("Doc successfully updated.");})
         .catch(exception);
     }
 
     // delete task
     function deleteTask(collection, docName) {
         db.collection(collection).doc(docName).delete()
-        .then(confirmation("Deleted task"))
+        .then(function(){confirmation("Deleted task");})
         .catch(exception);
     }
 
