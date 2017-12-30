@@ -22,9 +22,3 @@ $(document).ready(function() {
 	initializeFirebase();
 	firebaseAuth.start();
 });
-
-class MyComponent extends React.Component {
-    render() {
-        return <div>Hello World</div>;
-    }
-}
