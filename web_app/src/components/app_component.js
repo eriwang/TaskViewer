@@ -12,6 +12,7 @@ const AppViews = Object.freeze({
     TASK: Symbol("task")
 });
 
+// TODO: helper class? one for callbacks maybe
 class AppComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -29,29 +30,17 @@ class AppComponent extends React.Component {
         this.tasksInView = []; // TODO: think of a better solution
     }
 
-    // TODO: combine with onSignInSuccess??
     onAuthStateChangedUserSignedIn(user) {
-        console.log("user is signed in.");
-        this.switchAppView(AppViews.TASK);
-        setTimeout(() => {
-            this.changeTasks();
-            this.setState({loading: false});
-        }, 2000);
-        // get tasks, then stop loading
+        this.switchToTaskViewForUser(user);
     }
 
     onAuthStateChangedUserNotSignedIn() {
         console.log("user is not signed in.");
-        this.setState({loading: false}); // TODO: function??
+        this.stopLoading();
     }
 
-    onSignInSuccess() {
-        this.switchAppView(AppViews.TASK);
-        setTimeout(() => {
-            this.changeTasks();
-            this.setState({loading: false});
-        }, 2000);
-        // get tasks, then stop loading
+    onSignInSuccess(user, credential, redirectUrl) {
+        this.switchToTaskViewForUser(user);
     }
 
     onError(error) {
@@ -65,18 +54,26 @@ class AppComponent extends React.Component {
         });
     }
 
-    changeTasks() {
-        const tasks = [0, 1, 2, 3].map((index) => {
-            return {
-                name: "Test task",
-                description: "Task for testing",
-                color: 6,
-                priority: 1,
-                timestamp: new Date()
-            };
-        });
+    // TODO: better name
+    // TODO: make correct
+    switchToTaskViewForUser(user) {
+        this.switchAppView(AppViews.TASK);
+        setTimeout(() => {
+            this.tasksInView = [0, 1, 2, 3].map((index) => {
+                return {
+                    name: "Test task",
+                    description: "Task for testing",
+                    color: 6,
+                    priority: 1,
+                    timestamp: new Date()
+                };
+            });
+            this.stopLoading();
+        }, 2000);
+    }
 
-        this.tasksInView = tasks;
+    stopLoading() {
+        this.setState({loading: false});
     }
 
     componentDidUpdate() {
