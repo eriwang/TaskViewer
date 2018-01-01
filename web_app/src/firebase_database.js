@@ -1,4 +1,4 @@
-import db from "firebase/firestore";
+require("firebase/firestore");
 
 // FIXME: pretty sure helpers can be used in many different areas
 // FIXME: many comments are useless (just repeating the function/ class name)
@@ -25,6 +25,11 @@ class taskParameters {
 }
 
 var firebaseDatabase = (function() {
+    var db = null;
+
+    var onTaskDataReceived = null;
+    var onError = null;
+
     // adds an item to the task
     function addItemToTasks(taskParameters) {
         db.collection("tasks").add({
@@ -38,7 +43,7 @@ var firebaseDatabase = (function() {
         .then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
         })
-        .catch(exception);
+        .catch(onError);
     }
 
     // adds a user
@@ -49,11 +54,12 @@ var firebaseDatabase = (function() {
         .then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
         })
-        .catch(exception);
+        .catch(onError);
     }
 
     // each item will be read from the database collection "tasks" for a specific "user"
     function readTasks() {
+        // FIXME: onTaskDataReceived
         db.collection("tasks").get().then(logAllQuerySnapshots);
     }
 
@@ -74,7 +80,7 @@ var firebaseDatabase = (function() {
                 console.log("No doc found");
             }
         })
-        .catch(exception);
+        .catch(onError);
     }
 
     // updates a task from the database
@@ -89,31 +95,36 @@ var firebaseDatabase = (function() {
             user: taskParameters.user
         })
         .then(function(){confirmation("Doc successfully updated.");})
-        .catch(exception);
+        .catch(onError);
     }
 
     // delete task
     function deleteTask(collection, docName) {
         db.collection(collection).doc(docName).delete()
         .then(function(){confirmation("Deleted task");})
-        .catch(exception);
+        .catch(onError);
     }
 
     // helper function to log queries
     function logAllQuerySnapshots(querySnapshot) {
         querySnapshot.forEach((doc) => {
             console.log("${doc.id} => ${doc.data()}");
+            console.log(doc);
         });
-    }
-
-    // error helper
-    function exception(error) {
-        console.error(error);
     }
 
     // confirmation (Can be scaled to do more) or add other helper functions
     function confirmation(message) {
         console.log(message);
+    }
+
+    function initialize(firebase) {
+        db = firebase.firestore();
+    }
+
+    function setCallbacks(_onTaskDataReceived, _onError) {
+        onTaskDataReceived = _onTaskDataReceived;
+        onError = _onError;
     }
 
     return {
@@ -123,8 +134,10 @@ var firebaseDatabase = (function() {
         readTaskfromUser: readTaskfromUser,
         readDoc: readDoc,
         updateTask: updateTask,
-        deleteTask: deleteTask
+        deleteTask: deleteTask,
+        initialize: initialize,
+        setCallbacks: setCallbacks
     };
-});
+})();
 
 export default firebaseDatabase;

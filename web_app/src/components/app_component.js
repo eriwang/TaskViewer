@@ -20,6 +20,13 @@ const TITLE_JSX = (
     </div>
 );
 
+/*
+TODO: Firebase DB requires the following callbacks
+- onTaskDataReceived(taskData)
+    - rerender the view with task data
+    - should be called after query successful
+*/
+
 // TODO: helper class? one for callbacks maybe
 class AppComponent extends React.Component {
     constructor(props) {
@@ -29,9 +36,13 @@ class AppComponent extends React.Component {
             view: AppViews.TITLE
         };
 
-        firebaseAuth.initialize(
+        firebaseAuth.setCallbacks(
             this.onAuthStateChangedUserSignedIn.bind(this),
             this.onAuthStateChangedUserNotSignedIn.bind(this),
+            this.onError.bind(this)
+        );
+        firebaseDatabase.setCallbacks(
+            this.onTaskDataReceived.bind(this),
             this.onError.bind(this)
         );
 
@@ -44,18 +55,22 @@ class AppComponent extends React.Component {
 
     onAuthStateChangedUserNotSignedIn() {
         console.log("user is not signed in.");
-        this.stopLoading();
+        this.stopLoadingAppView();
     }
 
     onSignInSuccess(user, credential, redirectUrl) {
         this.switchToTaskViewForUser(user);
     }
 
+    onTaskDataReceived(taskData) {
+        console.log(taskData);
+    }
+
     onError(error) {
         // TODO
     }
 
-    switchAppView(appView) {
+    beginLoadingAppView(appView) {
         this.setState({
             loading: true,
             view: appView
@@ -65,7 +80,10 @@ class AppComponent extends React.Component {
     // TODO: better name
     // TODO: make correct with db calls instead of placeholder
     switchToTaskViewForUser(user) {
-        this.switchAppView(AppViews.TASK);
+        this.beginLoadingAppView(AppViews.TASK);
+        firebaseDatabase.readTasks();
+        // TODO: call db for tasks
+        return;
         setTimeout(() => {
             this.tasksInView = [0, 1, 2, 3].map((index) => {
                 return {
@@ -76,11 +94,11 @@ class AppComponent extends React.Component {
                     timestamp: new Date()
                 };
             });
-            this.stopLoading();
+            this.stopLoadingAppView();
         }, 2000);
     }
 
-    stopLoading() {
+    stopLoadingAppView() {
         this.setState({loading: false});
     }
 

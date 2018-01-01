@@ -3,6 +3,9 @@ import firebase from "firebase";
 import React from "react";
 import ReactDOM from "react-dom";
 
+import firebaseAuth from "./firebase_auth.js";
+import firebaseDatabase from "./firebase_database.js";
+
 import AppComponent from "./components/app_component.js";
 
 function initializeFirebase() {
@@ -15,6 +18,9 @@ function initializeFirebase() {
         messagingSenderId: "1015637164034"
     };
     firebase.initializeApp(firebaseConfig);
+
+    firebaseAuth.initialize(firebase);
+    firebaseDatabase.initialize(firebase);
 }
 
 $(document).ready(function() {
