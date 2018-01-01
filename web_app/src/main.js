@@ -1,10 +1,9 @@
-"use strict";
+import $ from "jquery";
+import firebase from "firebase";
+import React from "react";
+import ReactDOM from "react-dom";
 
-var $ = require("jquery");
-var firebase = require("firebase");
-
-var firebaseAuth = require("./firebase_auth.js");
-var firebaseDatabase = require("./firebase_database.js");
+import AppComponent from "./components/app_component.js";
 
 function initializeFirebase() {
     var firebaseConfig = {
@@ -20,5 +19,5 @@ function initializeFirebase() {
 
 $(document).ready(function() {
 	initializeFirebase();
-	firebaseAuth.start();
+	ReactDOM.render(<AppComponent />, document.getElementById("app"));
 });

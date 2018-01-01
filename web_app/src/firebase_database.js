@@ -1,9 +1,8 @@
-"use strict";
+import db from "firebase/firestore";
 
 // FIXME: pretty sure helpers can be used in many different areas
 // FIXME: many comments are useless (just repeating the function/ class name)
 
-var db = require("firebase/firestore");
 // parameters for finishing task boolean
 // parameters for checking whether #tasks reaches 100
 
@@ -128,4 +127,4 @@ var firebaseDatabase = (function() {
     };
 });
 
-module.exports = firebaseDatabase;
+export default firebaseDatabase;

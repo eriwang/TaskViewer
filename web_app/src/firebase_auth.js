@@ -1,11 +1,10 @@
-"use strict";
-
-var firebase = require("firebase");
-var firebaseui = require("firebaseui");
+import firebase from "firebase";
 
 // TODO: we need logout functionality
 var firebaseAuth = (function() {
-    // TODO: var callback = uiController.function;
+    var onAuthStateChangedUserSignedIn = null;
+    var onAuthStateChangedUserNotSignedIn = null;
+    var onError = null;
 
     function onAuthStateChanged(user) {
         const userIsSignedIn = (user != null);
@@ -17,46 +16,17 @@ var firebaseAuth = (function() {
         }
     }
 
-    function onAuthStateChangedUserSignedIn(user) {
-        console.log("user is signed in.");
-        // TODO: UI class callback
-    }
+    function initialize(_onAuthStateChangedUserSignedIn, _onAuthStateChangedUserNotSignedIn, _onError) {
+        onAuthStateChangedUserSignedIn = _onAuthStateChangedUserSignedIn;
+        onAuthStateChangedUserNotSignedIn = _onAuthStateChangedUserNotSignedIn;
+        onError = _onError;
 
-    function onAuthStateChangedUserNotSignedIn() {
-        console.log("user is not signed in.");
-
-        var firebaseUiConfig = {
-            signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
-            callbacks: {
-                signInSuccess: onSignInSuccess
-            },
-            signInFlow: "popup",
-            tosUrl: "www.google.com"
-        };
-
-        // TODO: UI class callback
-        var firebaseUi = new firebaseui.auth.AuthUI(firebase.auth());
-        firebaseUi.start("#firebaseui-auth-container", firebaseUiConfig);
-    }
-
-    function onAuthStateChangedError(error) {
-        // TODO: UI class error callback??
-        console.error(error);
-    }
-
-    function onSignInSuccess(user, credentials) {
-        console.log("sign in successful.");
-        // TODO: UI class callback
-        return false; // do not automatically redirect
-    }
-
-    function start() {
-        firebase.auth().onAuthStateChanged(onAuthStateChanged, onAuthStateChangedError);
+        firebase.auth().onAuthStateChanged(onAuthStateChanged, onError);
     }
 
     return {
-        start: start
+        initialize: initialize
     };
 })();
 
-module.exports = firebaseAuth;
+export default firebaseAuth;
