@@ -12,6 +12,14 @@ const AppViews = Object.freeze({
     TASK: Symbol("task")
 });
 
+const LOADING_JSX = <h1>Loading...</h1>;
+const TITLE_JSX = (
+    <div>
+        <h1>TaskViewer (Title Page)</h1>
+        <div id="firebaseui-auth-container" />
+    </div>
+);
+
 // TODO: helper class? one for callbacks maybe
 class AppComponent extends React.Component {
     constructor(props) {
@@ -55,7 +63,7 @@ class AppComponent extends React.Component {
     }
 
     // TODO: better name
-    // TODO: make correct
+    // TODO: make correct with db calls instead of placeholder
     switchToTaskViewForUser(user) {
         this.switchAppView(AppViews.TASK);
         setTimeout(() => {
@@ -94,19 +102,12 @@ class AppComponent extends React.Component {
 
     render() {
         if (this.state.loading) {
-            return (
-                <h1>Loading...</h1>
-            );
+            return LOADING_JSX;
         }
 
         switch (this.state.view) {
             case AppViews.TITLE:
-                return (
-                    <div>
-                        <h1>TaskViewer (Title Page)</h1>
-                        <div id="firebaseui-auth-container" />
-                    </div>
-                );
+                return TITLE_JSX;
             case AppViews.TASK:
                 return (
                     <div>
