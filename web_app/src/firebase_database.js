@@ -27,7 +27,6 @@ class taskParameters {
 var firebaseDatabase = (function() {
     var db = null;
 
-    var onTaskDataReceived = null;
     var onError = null;
 
     // adds an item to the task
@@ -58,9 +57,14 @@ var firebaseDatabase = (function() {
     }
 
     // each item will be read from the database collection "tasks" for a specific "user"
-    function readTasks() {
-        // FIXME: onTaskDataReceived
-        db.collection("tasks").get().then(logAllQuerySnapshots);
+    function readTasks(onTaskDataReceived) {
+        db.collection("tasks").get().then(function(querySnapshot) {
+            var tasks = querySnapshot.docs.map((documentSnapshot) => {
+                // TODO: id??
+                return documentSnapshot.data();
+            });
+            onTaskDataReceived(tasks);
+        });
     }
 
     // return each task related to a user
@@ -105,14 +109,6 @@ var firebaseDatabase = (function() {
         .catch(onError);
     }
 
-    // helper function to log queries
-    function logAllQuerySnapshots(querySnapshot) {
-        querySnapshot.forEach((doc) => {
-            console.log("${doc.id} => ${doc.data()}");
-            console.log(doc);
-        });
-    }
-
     // confirmation (Can be scaled to do more) or add other helper functions
     function confirmation(message) {
         console.log(message);
@@ -122,8 +118,7 @@ var firebaseDatabase = (function() {
         db = firebase.firestore();
     }
 
-    function setCallbacks(_onTaskDataReceived, _onError) {
-        onTaskDataReceived = _onTaskDataReceived;
+    function setCallbacks(_onError) {
         onError = _onError;
     }
 

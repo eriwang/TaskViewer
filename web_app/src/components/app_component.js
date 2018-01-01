@@ -20,13 +20,6 @@ const TITLE_JSX = (
     </div>
 );
 
-/*
-TODO: Firebase DB requires the following callbacks
-- onTaskDataReceived(taskData)
-    - rerender the view with task data
-    - should be called after query successful
-*/
-
 // TODO: helper class? one for callbacks maybe
 class AppComponent extends React.Component {
     constructor(props) {
@@ -42,7 +35,6 @@ class AppComponent extends React.Component {
             this.onError.bind(this)
         );
         firebaseDatabase.setCallbacks(
-            this.onTaskDataReceived.bind(this),
             this.onError.bind(this)
         );
 
@@ -50,7 +42,7 @@ class AppComponent extends React.Component {
     }
 
     onAuthStateChangedUserSignedIn(user) {
-        this.switchToTaskViewForUser(user);
+        this.refreshTaskView(user);
     }
 
     onAuthStateChangedUserNotSignedIn() {
@@ -59,15 +51,17 @@ class AppComponent extends React.Component {
     }
 
     onSignInSuccess(user, credential, redirectUrl) {
-        this.switchToTaskViewForUser(user);
+        this.refreshTaskView(user);
     }
 
     onTaskDataReceived(taskData) {
-        console.log(taskData);
+        this.tasksInView = taskData;
+        this.stopLoadingAppView();
     }
 
     onError(error) {
         // TODO
+        console.error(error);
     }
 
     beginLoadingAppView(appView) {
@@ -77,29 +71,14 @@ class AppComponent extends React.Component {
         });
     }
 
-    // TODO: better name
-    // TODO: make correct with db calls instead of placeholder
-    switchToTaskViewForUser(user) {
-        this.beginLoadingAppView(AppViews.TASK);
-        firebaseDatabase.readTasks();
-        // TODO: call db for tasks
-        return;
-        setTimeout(() => {
-            this.tasksInView = [0, 1, 2, 3].map((index) => {
-                return {
-                    name: "Test task",
-                    description: "Task for testing",
-                    color: 6,
-                    priority: 1,
-                    timestamp: new Date()
-                };
-            });
-            this.stopLoadingAppView();
-        }, 2000);
-    }
-
     stopLoadingAppView() {
         this.setState({loading: false});
+    }
+
+    // TODO: better name
+    refreshTaskView(user) {
+        this.beginLoadingAppView(AppViews.TASK);
+        firebaseDatabase.readTasks(this.onTaskDataReceived.bind(this));
     }
 
     componentDidUpdate() {
