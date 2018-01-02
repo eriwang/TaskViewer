@@ -1,30 +1,36 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
 html {
-    background: #93ca68;
-}
-
-h1 {
-    font-size: 100px;
-    font-family: "Raleway Light", Helvetica, Arial, sans-serif;
-    padding: 0;
-    margin: 0;
-}
-
-h2 {
-    font-size: 30px;
-    font-family: "Raleway-Light", Helvetica, Arial, sans-serif;
-    padding: 0;
-    margin: 0;
+    
 }
 
 body {
+    background: #93ca68;
     padding: 70px 0;
     text-align: center;
     color: white;
-    font-family: sans-serif;
+    font-family: 'Raleway', sans-serif;
     vertical-align: middle;
 }
 
-.box {
+.title-page-font {
+    font-family: "Raleway", Helvetica, Arial, sans-serif;
+}
+
+.title-page-spacing {
+    padding: 0;
+    margin: 0;
+}
+
+#title{
+    font-size: 100px;
+}
+
+#tagline{
+    font-size: 30px;
+}
+
+.logoCenter {
     position: absolute;
     display: flex;
     align-items: center;
@@ -36,7 +42,7 @@ body {
     opacity: 0.15;
 }
 
-.box2 {
+.text {
     position: absolute;
     display: flex;
     align-items: center;
@@ -48,18 +54,4 @@ body {
     flex-direction: column;
 }
 
-.footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color:black;
-    opacity: 0.7;
-    color: white;
-    text-align: center;
-}
 
-@font-face {
-   font-family: Raleway Light; 
-   src: url('Raleway-Light.ttf');
-} 
