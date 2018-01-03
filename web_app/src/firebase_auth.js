@@ -1,3 +1,4 @@
+// FIXME: use promises
 // TODO: we need logout functionality
 var firebaseAuth = (function() {
     var auth = null;

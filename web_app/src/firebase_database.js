@@ -1,7 +1,10 @@
 require("firebase/firestore");
 
+import Task from "./task.js";
+
 // FIXME: pretty sure helpers can be used in many different areas
 // FIXME: many comments are useless (just repeating the function/ class name)
+// FIXME: We can use promises instead of passing in callbacks
 
 // parameters for finishing task boolean
 // parameters for checking whether #tasks reaches 100
@@ -12,33 +15,14 @@ require("firebase/firestore");
 // a parameter in the task will reference the user in question
 // if it matches user, then it will read from that entry
 
-// class for the tasks
-class taskParameters {
-    constructor(color, desc, name, prio, timestamp, user) {
-        this.color = color;
-        this.desc = desc;
-        this.name = name;
-        this.prio = prio;
-        this.time = timestamp;
-        this.user = user;
-    }
-}
-
+// FIXME: verify all functions work as expected with task class
 var firebaseDatabase = (function() {
     var db = null;
 
     var onError = null;
 
-    // adds an item to the task
-    function addItemToTasks(taskParameters) {
-        db.collection("tasks").add({
-            color: taskParameters.color,
-            description: taskParameters.desc,
-            name: taskParameters.name,
-            priority: taskParameters.prio,
-            time: taskParameters.time,
-            user: taskParameters.user
-        })
+    function addTask(task) {
+        db.collection("tasks").add(task.toObject())
         .then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
         })
@@ -57,13 +41,16 @@ var firebaseDatabase = (function() {
     }
 
     // each item will be read from the database collection "tasks" for a specific "user"
-    function readTasks(onTaskDataReceived) {
-        db.collection("tasks").get().then(function(querySnapshot) {
-            var tasks = querySnapshot.docs.map((documentSnapshot) => {
-                // TODO: id??
-                return documentSnapshot.data();
+    function readTasks() {
+        return db.collection("tasks").get().then(function(querySnapshot) {
+            const tasks = querySnapshot.docs.map((documentSnapshot) => {
+                var taskData = documentSnapshot.data();
+
+                return new Task(taskData.name, taskData.description, taskData.timestamp, taskData.color,
+                    taskData.priority);
             });
-            onTaskDataReceived(tasks);
+
+            return tasks;
         });
     }
 
@@ -87,17 +74,11 @@ var firebaseDatabase = (function() {
         .catch(onError);
     }
 
+    // FIXME: update this function to work correctly with the Task class
     // updates a task from the database
-    function updateTask(collection, docName, taskParameters) {
+    function updateTask(collection, docName, task) {
         var taskRef = db.collection(collection).doc(docName);
-        taskRef.update({
-            color: taskParameters.color,
-            description: taskParameters.desc,
-            name: taskParameters.name,
-            priority: taskParameters.prio,
-            time: taskParameters.time,
-            user: taskParameters.user
-        })
+        taskRef.update(task.toObject())
         .then(function(){confirmation("Doc successfully updated.");})
         .catch(onError);
     }
@@ -123,7 +104,7 @@ var firebaseDatabase = (function() {
     }
 
     return {
-        addItemToTasks: addItemToTasks,
+        addTask: addTask,
         addUser: addUser,
         readTasks: readTasks,
         readTaskfromUser: readTaskfromUser,

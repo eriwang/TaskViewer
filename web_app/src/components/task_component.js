@@ -1,6 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
 
+import Task from "../task.js";
+
+// TODO: use state to manage deleting, editing, expanding, etc.
 class TaskComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -8,6 +11,7 @@ class TaskComponent extends React.Component {
 
     render() {
         const task = this.props.task;
+
         return (
             <div>
                 <p>Name: {task.name}</p>
@@ -20,13 +24,7 @@ class TaskComponent extends React.Component {
     }
 }
 
-const TaskPropType = PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    color: PropTypes.number.isRequired,
-    priority: PropTypes.number.isRequired,
-    timestamp: PropTypes.instanceOf(Date).isRequired
-});
+const TaskPropType = PropTypes.instanceOf(Task);
 
 TaskComponent.propTypes = {
     task: TaskPropType.isRequired

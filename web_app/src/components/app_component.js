@@ -4,6 +4,7 @@ import React from "react";
 
 import firebaseAuth from "../firebase_auth.js";
 import firebaseDatabase from "../firebase_database.js";
+import tasksInView from "../tasks_in_view.js";
 
 import TaskViewComponent from "./task_view_component.js";
 
@@ -38,11 +39,11 @@ class AppComponent extends React.Component {
             this.onError.bind(this)
         );
 
-        this.tasksInView = []; // TODO: think of a better solution
+        this.stopLoadingAppView = this.stopLoadingAppView.bind(this);
     }
 
     onAuthStateChangedUserSignedIn(user) {
-        this.refreshTaskView(user);
+        this.loadInitialTaskView(user);
     }
 
     onAuthStateChangedUserNotSignedIn() {
@@ -51,12 +52,7 @@ class AppComponent extends React.Component {
     }
 
     onSignInSuccess(user, credential, redirectUrl) {
-        this.refreshTaskView(user);
-    }
-
-    onTaskDataReceived(taskData) {
-        this.tasksInView = taskData;
-        this.stopLoadingAppView();
+        this.loadInitialTaskView(user);
     }
 
     onError(error) {
@@ -72,15 +68,17 @@ class AppComponent extends React.Component {
     }
 
     stopLoadingAppView() {
+        console.log("loading complete.");
         this.setState({loading: false});
     }
 
     // TODO: better name
-    refreshTaskView(user) {
+    loadInitialTaskView(user) {
         this.beginLoadingAppView(AppViews.TASK);
-        firebaseDatabase.readTasks(this.onTaskDataReceived.bind(this));
+        tasksInView.syncWithDatabase().then(this.stopLoadingAppView);
     }
 
+    // TODO: manage this with state instead
     componentDidUpdate() {
         if (this.state.view == AppViews.TITLE) {
             var firebaseUiConfig = {
@@ -109,8 +107,7 @@ class AppComponent extends React.Component {
                 return (
                     <div>
                         <h1>TaskViewer (Task Page)</h1>
-                        <TaskViewComponent tasks={this.tasksInView} />
-                        <button onClick={this.changeTasks}>Click me!</button>
+                        <TaskViewComponent tasks={tasksInView.getShownTasks()} />
                     </div>
                 );
         }
