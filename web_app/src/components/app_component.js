@@ -4,6 +4,7 @@ import React from "react";
 
 import firebaseAuth from "../firebase_auth.js";
 import firebaseDatabase from "../firebase_database.js";
+import tasksInView from "../tasks_in_view.js";
 
 import TaskViewComponent from "./task_view_component.js";
 
@@ -11,6 +12,14 @@ const AppViews = Object.freeze({
     TITLE: Symbol("title"),
     TASK: Symbol("task")
 });
+
+const LOADING_JSX = <h1>Loading...</h1>;
+const TITLE_JSX = (
+    <div>
+        <h1>TaskViewer (Title Page)</h1>
+        <div id="firebaseui-auth-container" />
+    </div>
+);
 
 // TODO: helper class? one for callbacks maybe
 class AppComponent extends React.Component {
@@ -21,61 +30,55 @@ class AppComponent extends React.Component {
             view: AppViews.TITLE
         };
 
-        firebaseAuth.initialize(
+        firebaseAuth.setCallbacks(
             this.onAuthStateChangedUserSignedIn.bind(this),
             this.onAuthStateChangedUserNotSignedIn.bind(this),
             this.onError.bind(this)
         );
+        firebaseDatabase.setCallbacks(
+            this.onError.bind(this)
+        );
 
-        this.tasksInView = []; // TODO: think of a better solution
+        this.stopLoadingAppView = this.stopLoadingAppView.bind(this);
     }
 
     onAuthStateChangedUserSignedIn(user) {
-        this.switchToTaskViewForUser(user);
+        this.loadInitialTaskView(user);
     }
 
     onAuthStateChangedUserNotSignedIn() {
         console.log("user is not signed in.");
-        this.stopLoading();
+        this.stopLoadingAppView();
     }
 
     onSignInSuccess(user, credential, redirectUrl) {
-        this.switchToTaskViewForUser(user);
+        this.loadInitialTaskView(user);
     }
 
     onError(error) {
         // TODO
+        console.error(error);
     }
 
-    switchAppView(appView) {
+    beginLoadingAppView(appView) {
         this.setState({
             loading: true,
             view: appView
         });
     }
 
-    // TODO: better name
-    // TODO: make correct
-    switchToTaskViewForUser(user) {
-        this.switchAppView(AppViews.TASK);
-        setTimeout(() => {
-            this.tasksInView = [0, 1, 2, 3].map((index) => {
-                return {
-                    name: "Test task",
-                    description: "Task for testing",
-                    color: 6,
-                    priority: 1,
-                    timestamp: new Date()
-                };
-            });
-            this.stopLoading();
-        }, 2000);
-    }
-
-    stopLoading() {
+    stopLoadingAppView() {
+        console.log("loading complete.");
         this.setState({loading: false});
     }
 
+    // TODO: better name
+    loadInitialTaskView(user) {
+        this.beginLoadingAppView(AppViews.TASK);
+        tasksInView.syncWithDatabase().then(this.stopLoadingAppView);
+    }
+
+    // TODO: manage this with state instead
     componentDidUpdate() {
         if (this.state.view == AppViews.TITLE) {
             var firebaseUiConfig = {
@@ -94,25 +97,17 @@ class AppComponent extends React.Component {
 
     render() {
         if (this.state.loading) {
-            return (
-                <h1>Loading...</h1>
-            );
+            return LOADING_JSX;
         }
 
         switch (this.state.view) {
             case AppViews.TITLE:
-                return (
-                    <div>
-                        <h1>TaskViewer (Title Page)</h1>
-                        <div id="firebaseui-auth-container" />
-                    </div>
-                );
+                return TITLE_JSX;
             case AppViews.TASK:
                 return (
                     <div>
                         <h1>TaskViewer (Task Page)</h1>
-                        <TaskViewComponent tasks={this.tasksInView} />
-                        <button onClick={this.changeTasks}>Click me!</button>
+                        <TaskViewComponent tasks={tasksInView.getShownTasks()} />
                     </div>
                 );
         }

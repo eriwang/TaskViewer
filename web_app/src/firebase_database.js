@@ -1,7 +1,10 @@
-import db from "firebase/firestore";
+require("firebase/firestore");
+
+import Task from "./task.js";
 
 // FIXME: pretty sure helpers can be used in many different areas
 // FIXME: many comments are useless (just repeating the function/ class name)
+// FIXME: We can use promises instead of passing in callbacks
 
 // parameters for finishing task boolean
 // parameters for checking whether #tasks reaches 100
@@ -12,33 +15,18 @@ import db from "firebase/firestore";
 // a parameter in the task will reference the user in question
 // if it matches user, then it will read from that entry
 
-// class for the tasks
-class taskParameters {
-    constructor(color, desc, name, prio, timestamp, user) {
-        this.color = color;
-        this.desc = desc;
-        this.name = name;
-        this.prio = prio;
-        this.time = timestamp;
-        this.user = user;
-    }
-}
-
+// FIXME: verify all functions work as expected with task class
 var firebaseDatabase = (function() {
-    // adds an item to the task
-    function addItemToTasks(taskParameters) {
-        db.collection("tasks").add({
-            color: taskParameters.color,
-            description: taskParameters.desc,
-            name: taskParameters.name,
-            priority: taskParameters.prio,
-            time: taskParameters.time,
-            user: taskParameters.user
-        })
+    var db = null;
+
+    var onError = null;
+
+    function addTask(task) {
+        db.collection("tasks").add(task.toObject())
         .then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
         })
-        .catch(exception);
+        .catch(onError);
     }
 
     // adds a user
@@ -49,12 +37,21 @@ var firebaseDatabase = (function() {
         .then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
         })
-        .catch(exception);
+        .catch(onError);
     }
 
     // each item will be read from the database collection "tasks" for a specific "user"
     function readTasks() {
-        db.collection("tasks").get().then(logAllQuerySnapshots);
+        return db.collection("tasks").get().then(function(querySnapshot) {
+            const tasks = querySnapshot.docs.map((documentSnapshot) => {
+                var taskData = documentSnapshot.data();
+
+                return new Task(taskData.name, taskData.description, taskData.timestamp, taskData.color,
+                    taskData.priority);
+            });
+
+            return tasks;
+        });
     }
 
     // return each task related to a user
@@ -74,41 +71,23 @@ var firebaseDatabase = (function() {
                 console.log("No doc found");
             }
         })
-        .catch(exception);
+        .catch(onError);
     }
 
+    // FIXME: update this function to work correctly with the Task class
     // updates a task from the database
-    function updateTask(collection, docName, taskParameters) {
+    function updateTask(collection, docName, task) {
         var taskRef = db.collection(collection).doc(docName);
-        taskRef.update({
-            color: taskParameters.color,
-            description: taskParameters.desc,
-            name: taskParameters.name,
-            priority: taskParameters.prio,
-            time: taskParameters.time,
-            user: taskParameters.user
-        })
+        taskRef.update(task.toObject())
         .then(function(){confirmation("Doc successfully updated.");})
-        .catch(exception);
+        .catch(onError);
     }
 
     // delete task
     function deleteTask(collection, docName) {
         db.collection(collection).doc(docName).delete()
         .then(function(){confirmation("Deleted task");})
-        .catch(exception);
-    }
-
-    // helper function to log queries
-    function logAllQuerySnapshots(querySnapshot) {
-        querySnapshot.forEach((doc) => {
-            console.log("${doc.id} => ${doc.data()}");
-        });
-    }
-
-    // error helper
-    function exception(error) {
-        console.error(error);
+        .catch(onError);
     }
 
     // confirmation (Can be scaled to do more) or add other helper functions
@@ -116,15 +95,25 @@ var firebaseDatabase = (function() {
         console.log(message);
     }
 
+    function initialize(firebase) {
+        db = firebase.firestore();
+    }
+
+    function setCallbacks(_onError) {
+        onError = _onError;
+    }
+
     return {
-        addItemToTasks: addItemToTasks,
+        addTask: addTask,
         addUser: addUser,
         readTasks: readTasks,
         readTaskfromUser: readTaskfromUser,
         readDoc: readDoc,
         updateTask: updateTask,
-        deleteTask: deleteTask
+        deleteTask: deleteTask,
+        initialize: initialize,
+        setCallbacks: setCallbacks
     };
-});
+})();
 
 export default firebaseDatabase;

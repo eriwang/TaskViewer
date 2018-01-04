@@ -1,7 +1,8 @@
-import firebase from "firebase";
-
+// FIXME: use promises
 // TODO: we need logout functionality
 var firebaseAuth = (function() {
+    var auth = null;
+
     var onAuthStateChangedUserSignedIn = null;
     var onAuthStateChangedUserNotSignedIn = null;
     var onError = null;
@@ -16,16 +17,21 @@ var firebaseAuth = (function() {
         }
     }
 
-    function initialize(_onAuthStateChangedUserSignedIn, _onAuthStateChangedUserNotSignedIn, _onError) {
+    function initialize(firebase) {
+        auth = firebase.auth();
+    }
+
+    function setCallbacks(_onAuthStateChangedUserSignedIn, _onAuthStateChangedUserNotSignedIn, _onError) {
         onAuthStateChangedUserSignedIn = _onAuthStateChangedUserSignedIn;
         onAuthStateChangedUserNotSignedIn = _onAuthStateChangedUserNotSignedIn;
         onError = _onError;
 
-        firebase.auth().onAuthStateChanged(onAuthStateChanged, onError);
+        auth.onAuthStateChanged(onAuthStateChanged, onError);
     }
 
     return {
-        initialize: initialize
+        initialize: initialize,
+        setCallbacks: setCallbacks
     };
 })();
 
