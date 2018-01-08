@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway');
-@font-face{
+@font-face {
 	font-family: 'Raleway', sans-serif;
 }
 
-.modal{
+.modal {
 	font-family: 'Raleway';
 	display: none;
 	position: fixed;
@@ -15,50 +15,50 @@
 	overflow: auto;
 	background-color: rgba(0,0,0,0.4);
 }
-.modal-content{
+.modal-content {
 	display: flex;
 	justify-content: center;
 }
 
-#title{
+#new-task-form-title {
 	padding-left: 100px;
 	padding-right: 100px;
 	padding-top: 10px;
-	padding-bottom:10px;
+	padding-bottom: 10px;
 	text-align: center;
 	color: #fff;
 	background-color: #28493a;
-	margin:0 auto;
+	margin: 0 auto;
 }
 
-#form-body{
+#new-task-form-body {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	background-color: #fff;
 }
 
-#text-input{
+#text-input {
 	width: 100px;
 }
 
-.desc{
+.description {
 	width: 50%;
 	text-align: right;
 	margin-right: 5px;
 }
-.input-item{
+.input-item {
 	width: 50%;
 	text-align: left;
 	margin-left: 5px;
 }
-.params{
+.params {
 	width: 100%;
 	display: flex;
 	justify-content: center;
 }
-#create-button{
+#create-task-button {
 	font-family: 'Raleway';
-	background-color:#93ca68;
+	background-color: #93ca68;
 	color: #fff;
 	border-radius: 5px;
 	display: block;
@@ -66,7 +66,7 @@
 }
 /*the button*/
 .close:hover,
-.close:focus{
+.close:focus {
 	color: black;
 	text-decoration: none;
 	cursor: pointer;

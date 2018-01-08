@@ -3,56 +3,55 @@
 <head>
     <title>Test</title>
     <link rel="stylesheet" type="text/css" href="src/form.css">
-
 </head>
 <body>
     <div id="task-modal" class="modal">
         <div class="modal-content">
         <span class="close">&times;</span>
         <form id="frame">
-            <h1 id = "title">Create new Task</h1>
-            <div id="form-body">
+            <h1 id="new-task-form-title">Create new Task</h1>
+            <div id="new-task-form-body">
                 <br>
-                <div class="params">
-                    <div class="desc">Task Name</div>   
+                <div class="task-parameters">
+                    <div class="parameter-description">Task Name</div>   
                     <div class="input-item">
                         <input id="text-input" type="text"></input>
                     </div>
                 </div>
                 <br>
-                <div class="params">
-                    <div class="desc">Task Description</div>   
+                <div class="task-parameters">
+                    <div class="parameter-description">Task description</div>   
                     <div class="input-item">
-                        <textarea id="task-description" type="text" rows="5" cols="17"></textarea>
+                        <textarea id="task-parameter-description" type="text" rows="5" cols="17"></textarea>
                     </div>
                 </div>
                 <br>
-                <div class="params">
-                    <div class="desc">Completion Time</div>
+                <div class="task-parameters">
+                    <div class="parameter-description">Completion Time</div>
                     <div class="input-item">
                         <input id="time" type="time"></input>
                     </div>
                 </div>
                 <br>
-                <div class="params">
-                    <div class="desc">Completion Date</div>
+                <div class="task-parameters">
+                    <div class="parameter-description">Completion Date</div>
                     <div class="input-item">
-                        <input id = "date" type = "date"></input>
+                        <input id="date" type="date"></input>
                     </div>
                 </div>
                 <br>
-                <div class="params">
-                    <div class="desc">Color</div>
+                <div class="task-parameters">
+                    <div class="desccription">Color</div>
                     <div class="input-item">
-                        <select name = "color" id = "color">
-                            <option value = "1">light</option>
-                            <option value = "2">medium</option>
-                            <option value = "3">heavy</option>
+                        <select name="color" id="color">
+                            <option value="1">light</option>
+                            <option value="2">medium</option>
+                            <option value="3">heavy</option>
                         </select>
                     </div>
                 </div>
                 <br>
-                <button id="create-button" class="close">Create!</button>
+                <button id="create-task-button" class="close">Create!</button>
             </div>
         </form>
         </div>
