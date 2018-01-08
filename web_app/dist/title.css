@@ -42,7 +42,7 @@ body {
     opacity: 0.15;
 }
 
-.text {
+.title-text-container {
     position: absolute;
     display: flex;
     align-items: center;

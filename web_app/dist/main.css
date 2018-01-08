@@ -1,3 +1,12 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    height: 100%;
+    background: #93ca68;
+    background-image: url(images/bg_logo.png);
+    background-repeat: repeat;   
+}   
+
 #content {
     background: #fff;
     color: #545454;
@@ -9,20 +18,9 @@
     padding-bottom: 20px;
     border-radius: 10px;
     box-shadow: 5px 25px 20px -10px #606060; 
-    
 }
 
-body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 18px;
-    width: 100%;
-    height: 100%;
-    background: #93ca68;
-    background-image: url(images/bg_logo.png);
-    background-repeat: repeat;   
-}   
-
-.top {
+#sticky-header {
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -30,7 +28,6 @@ body {
     left: 0;
     width: 100%;
 }
-
 
 /* The navigation bar */
 .navbar {
@@ -42,7 +39,7 @@ body {
 }
 
 /* Style the search box inside the navigation bar */
-.navbar input[type=text] {
+#search-bar {
     display: flex;
     padding: 2px;
     border: none;
@@ -67,8 +64,13 @@ body {
 }
 
 /* Main content */
-.webapp {
+#main {
+    display: flex;
+    flex-direction: column;
     margin-top: 22px;
+}
+
+.task {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -83,13 +85,17 @@ body {
     color: #656565;
 }
 
-#desc {
+.desc {
     color: #858585;
     font-size: 14px;
 }
 
+.time {
+    font-size: 30px;
+}
 
 .task-text-spacing {
+    font-size: 25px;
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 2px;
@@ -104,13 +110,11 @@ body {
     border-color: darkgray; 
 }
 
-.descbox {
+.task-description-container {
     display: flex;
     flex-direction: column;
-    margin: 0;
     justify-content: center;
-    
-   
+    margin: 0; 
 }
 
 .colorPriority {
@@ -119,7 +123,7 @@ body {
     width: 15px;
 }
 
-.buttonClass {
+.button-class {
     display: flex;
     flex-direction: row-reverse;
     width: 100%;

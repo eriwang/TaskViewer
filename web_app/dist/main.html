@@ -9,19 +9,21 @@
         <link rel="stylesheet" href="main.css">
         
     </head>
-
-    <div class="top">
+ 
+    <body>  
+        
+    <div id="sticky-header">
         <div class="navbar">
             <img id="logo" src="images/icon_small.png" alt="TaskViewer Logo">
             <a>Log out</a>
             <a>Sort</a>
             <a>Filter by</a>
-            <input type="text" placeholder="Search..">
+            <input id="search-bar" type="text" placeholder="Search..">
         </div>
-        <div class="buttonClass">
+        <div class="button-class">
             <button id="create-task-button"class="button">+</button>    
         </div>
-        <div class="buttonClass">
+        <div class="button-class">
             <button id="delete-task-button" class="button">x</button>    
         </div>
     </div>    
@@ -29,25 +31,34 @@
     
     <div id="content">
     <div id="main">
-        <div class="webapp">
-            <div class="descbox">
-                <h2 id="task-name" class="task-text-spacing">Insert Task Here</h2>
-                <h3 id="desc" class="task-text-spacing">Description</h3>
+        <div class="task">
+            <div class="task-description-container">
+                <p class="task-text-spacing"><strong>Insert Task Here</strong></p>
+                <p class="task-text-spacing desc">Description</p>
             </div>
-            <h2 id="time">12:00:00 P.M</h2>
-            <div class="colorPriority"></div>
-        </div>       
-    </div> 
-    </div>
-    
-    
-    
-    <body>  
-
- 
-
+            <p class="time">12:00:00 P.M</p>
+            <div class="colorPriority"></div>      
+        </div>   
         
- 
+        <div class="task">
+            <div class="task-description-container">
+                <p class="task-text-spacing"><strong>Insert Task Here</strong></p>
+                <p class="task-text-spacing desc">Description</p>
+            </div>
+            <p class="time">12:00:00 P.M</p>
+            <div class="colorPriority"></div>      
+        </div> 
+        
+        <div class="task">
+            <div class="task-description-container">
+                <p class="task-text-spacing"><strong>Insert Task Here</strong></p>
+                <p class="task-text-spacing desc">Description</p>
+            </div>
+            <p class="time">12:00:00 P.M</p>
+            <div class="colorPriority"></div>      
+        </div> 
+        
+    </div>
 
     </body>
 
