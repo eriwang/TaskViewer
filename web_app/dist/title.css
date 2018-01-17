@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway');
-
 html {
     
 }
@@ -9,7 +7,6 @@ body {
     padding: 70px 0;
     text-align: center;
     color: white;
-    font-family: 'Raleway', sans-serif;
     vertical-align: middle;
 }
 
@@ -22,15 +19,15 @@ body {
     margin: 0;
 }
 
-#title{
+#title {
     font-size: 100px;
 }
 
-#tagline{
+#tagline {
     font-size: 30px;
 }
 
-.logoCenter {
+.logo-center {
     position: absolute;
     display: flex;
     align-items: center;

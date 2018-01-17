@@ -29,7 +29,6 @@ body {
     width: 100%;
 }
 
-/* The navigation bar */
 .navbar {
     display: flex;
     overflow: hidden;
@@ -38,9 +37,7 @@ body {
     box-shadow: -5px 20px 50px -10px #656565; 
 }
 
-/* Style the search box inside the navigation bar */
 #search-bar {
-    display: flex;
     padding: 2px;
     border: none;
     margin-top: 10px;
@@ -65,9 +62,7 @@ body {
 
 /* Main content */
 #main {
-    display: flex;
-    flex-direction: column;
-    margin-top: 22px;
+
 }
 
 .task {
@@ -85,12 +80,19 @@ body {
     color: #656565;
 }
 
+.task-description-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0; 
+}
+
 .desc {
     color: #858585;
     font-size: 14px;
 }
 
-.time {
+.task-time {
     font-size: 30px;
 }
 
@@ -110,39 +112,16 @@ body {
     border-color: darkgray; 
 }
 
-.task-description-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 0; 
-}
-
-.colorPriority {
+.task-priority {
     background-color: coral;
     height: auto;
     width: 15px;
 }
 
-.button-class {
+.new-flex-row-anchor-right {
     display: flex;
     flex-direction: row-reverse;
     width: 100%;
-}
-
-#create-task-button {
-    background-color:chocolate;
-}
-
-#create-task-button:hover {
-    background-color:darksalmon;
-}
-
-#delete-task-button {
-    background-color: firebrick;
-}
-
-#delete-task-button:hover {
-    background-color: crimson;
 }
 
 .button {
@@ -154,6 +133,24 @@ body {
     margin: 2% 8%;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.2s;
-	border-radius: 20%;
+    border-radius: 20%;
 }
+
+#create-task-button {
+    background-color: chocolate;
+}
+
+#create-task-button:hover {
+    background-color: darksalmon;
+}
+
+#delete-task-button {
+    background-color: firebrick;
+}
+
+#delete-task-button:hover {
+    background-color: crimson;
+}
+
+
 
