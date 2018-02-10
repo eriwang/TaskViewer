@@ -1,7 +1,3 @@
-html {
-    
-}
-
 body {
     background: #93ca68;
     color: white;
@@ -24,7 +20,7 @@ body {
     font-size: 30px;
 }
 
-.logo-center {
+.logo {
     opacity: 0.15;
 }
 
@@ -33,7 +29,6 @@ body {
     left: 0;
     width: 100%;
     height: 100%; 
-    
     position: absolute;
     display: flex;
     align-items: center;
@@ -43,5 +38,3 @@ body {
 .title-text-container {
     flex-direction: column;
 }
-
-
