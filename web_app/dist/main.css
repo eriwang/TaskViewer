@@ -128,17 +128,24 @@ body {
 
 .new-flex-row-anchor-right {
     display: flex;
-    flex-direction: row-reverse;
-    width: 100%;
+    justify-content: flex-end;
+}
+
+#button-container {
+    width: 20%;
+    flex-direction: row;
+    flex-flow: row-reverse;
+    flex-wrap: wrap;
 }
 
 .button {
+    display: flex;
     border: none;
     color: white;
     padding: 5px 15px;
     text-decoration: none;
     font-size: 50px;
-    margin: 2% 8%;
+    margin: 10% 35% 30%;
     border-radius: 20%;
 }
 
