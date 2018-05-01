@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="images/png" href="images/icon.png" />       
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TaskViewer</title>
+    <meta name="description" content="Schedule tasks, without the clutter">
+    <link rel="stylesheet" href="main.css">   
+</head>
+ 
+<body>    
+    <div id="sticky-header">
+        <div class="navbar">
+            <img id="logo" src="images/icon_small.png" alt="TaskViewer Logo">
+            <a class="hover-transition">Log out</a>
+            <a class="hover-transition">Sort</a>
+            <a class="hover-transition">Filter by</a>
+            <div id="search-bar-container-anchor-right">
+                <input id="search-bar" type="text" placeholder="Search...">
+            </div>
+        </div>
+        <div class="new-flex-row-anchor-right">
+            <div id="button-container">
+            <button id="create-task-button" class="button hover-transition">+</button>   
+            <button id="delete-task-button" class="button hover-transition">x</button>   </div> 
+        </div>
+    </div>    
+
+    <div id="content">
+        <div class="task">
+            <div class="task-description-container">
+                <p class="task-text-spacing task-name">Insert Task Here</p>
+                <p class="task-text-spacing task-description">Description</p>
+            </div>
+            <p class="task-time">12:00:00 P.M</p>
+            <div class="task-color"></div>      
+        </div>
+        <div class="task">
+            <div class="task-description-container">
+                <p class="task-text-spacing task-name">Insert Task Here</p>
+                <p class="task-text-spacing task-description">Description</p>
+            </div>
+            <p class="task-time">12:00:00 P.M</p>
+            <div class="task-color"></div>      
+        </div>
+        <div class="task">
+            <div class="task-description-container">
+                <p class="task-text-spacing task-name">Insert Task Here</p>
+                <p class="task-text-spacing ">Description</p>
+            </div>
+            <p class="task-time">12:00:00 P.M</p>
+            <div class="task-color"></div>      
+        </div>
+    </div>
+</body>
+</html>
